@@ -1,2 +1,8 @@
-One of the elements of the inno-taxi service
-Golang version: 1.18
+# Order-service
+***
+The service provides functionality to work with orders.  
+
+# External requirements
+***
+    Go 1.18
+
