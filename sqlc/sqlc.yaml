@@ -1,0 +1,6 @@
+version: "1"
+packages:
+    - path: "../app/models/sqlc/"
+      queries: "orders.sql"
+      schema: "orders.sql"
+      emit_json_tags: true
