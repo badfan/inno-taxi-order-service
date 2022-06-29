@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/badfan/inno-taxi-order-service";
+
+message SetDriverRatingRequest {
+  int32 rating = 1;
+}
+
+message SetUserRatingRequest {
+  int32 rating = 1;
+}
+
+message GetTaxiForUserRequest{
+  string user_uuid = 1;
+  string origin = 2;
+  string destination = 3;
+  string taxi_type = 4;
+  float user_rating = 5;
+}
+
+message GetTaxiForUserResponse {
+  string driver_uuid = 1;
+  float driver_rating = 2;
+}
+
+message GetOrderForDriverRequest {
+  string driver_uuid = 1;
+  string taxi_type = 2;
+  float driver_rating = 3;
+}
+
+message GetOrderForDriverResponse {
+  string user_uuid = 1;
+  string origin = 2;
+  string destination = 3;
+  float user_rating = 4;
+}
+
+message GetOrderHistoryRequest {
+  string uuid = 1;
+}
+
+message GetOrderHistoryResponse {
+  repeated Order orders = 1;
+}
+
+message Order {
+  string user_uuid = 1;
+  string driver_uuid = 2;
+  string origin = 3;
+  string destination = 4;
+  string taxi_type = 5;
+  string date = 6;
+  string duration = 7;
+}
+
+message EmptyResponse {}
+
+service UserService {
+  rpc SetUserRating (SetUserRatingRequest) returns (EmptyResponse) {}
+}
+
+service DriverService {
+  rpc SetDriverRating (SetDriverRatingRequest) returns (EmptyResponse) {}
+}
+
+service OrderService {
+  rpc SetDriverRating (SetDriverRatingRequest) returns (EmptyResponse) {}
+  rpc SetUserRating (SetUserRatingRequest) returns (EmptyResponse) {}
+  rpc GetTaxiForUser (GetTaxiForUserRequest) returns (GetTaxiForUserResponse) {}
+  rpc GetOrderForDriver (GetOrderForDriverRequest) returns (GetOrderForDriverResponse) {}
+  rpc GetOrderHistory (GetOrderHistoryRequest) returns (GetOrderHistoryResponse) {}
+}

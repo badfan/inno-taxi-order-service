@@ -17,8 +17,9 @@ CREATE TABLE IF NOT EXISTS orders
 INSERT INTO orders (user_uuid, driver_uuid, origin, destination, taxi_type)
 VALUES ($1, $2, $3, $4, $5) RETURNING *;
 
--- name: GetOrders :many
-SELECT * FROM orders;
+-- name: GetOrdersByUUID :many
+SELECT * FROM orders
+WHERE user_uuid=$1 OR driver_uuid=$1;
 
 -- name: UpdateOrderStatus :one
 UPDATE orders
