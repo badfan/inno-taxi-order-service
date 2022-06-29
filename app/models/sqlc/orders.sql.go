@@ -57,12 +57,13 @@ func (q *Queries) DeleteOrder(ctx context.Context, id int32) error {
 	return err
 }
 
-const getOrders = `-- name: GetOrders :many
+const getOrdersByUUID = `-- name: GetOrdersByUUID :many
 SELECT id, user_uuid, driver_uuid, origin, destination, taxi_type, is_finished, created_at, updated_at FROM orders
+WHERE user_uuid=$1 OR driver_uuid=$1
 `
 
-func (q *Queries) GetOrders(ctx context.Context) ([]Order, error) {
-	rows, err := q.db.QueryContext(ctx, getOrders)
+func (q *Queries) GetOrdersByUUID(ctx context.Context, userUuid uuid.UUID) ([]Order, error) {
+	rows, err := q.db.QueryContext(ctx, getOrdersByUUID, userUuid)
 	if err != nil {
 		return nil, err
 	}
